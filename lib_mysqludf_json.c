@@ -552,17 +552,32 @@ void write_json_value(
 			case STRING_RESULT:		//write string value
 				//add opening quote
 				*(*buffer_ptr)='"';	
-				*buffer_ptr += 1;				
+				*buffer_ptr += 1;
 				//loop through the string to escape metacharacters 
 				for(i=0; i<length; i++){
 					switch (value[i]){
-						case '\n':							
+						case '\n':
 							*(*buffer_ptr+1) = 'n';
 							*(*buffer_ptr)='\\';
 							*buffer_ptr+=2;
 							break;
 						case '\r':
 							*(*buffer_ptr+1) = 'r';
+							*(*buffer_ptr)='\\';
+							*buffer_ptr+=2;
+							break;
+						case '\t':
+							*(*buffer_ptr+1) = 't';
+							*(*buffer_ptr)='\\';
+							*buffer_ptr+=2;
+							break;
+						case '\b':
+							*(*buffer_ptr+1) = 'b';
+							*(*buffer_ptr)='\\';
+							*buffer_ptr+=2;
+							break;
+						case '\f':
+							*(*buffer_ptr+1) = 'f';
 							*(*buffer_ptr)='\\';
 							*buffer_ptr+=2;
 							break;
@@ -986,4 +1001,3 @@ char* json_members(
 }
 
 #endif /* HAVE_DLOPEN */
-
